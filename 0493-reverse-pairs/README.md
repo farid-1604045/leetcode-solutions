@@ -10,22 +10,22 @@
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
 
-<pre style="position: relative;"><strong>Input:</strong> nums = [1,3,2,3,1]
+<pre><strong>Input:</strong> nums = [1,3,2,3,1]
 <strong>Output:</strong> 2
 <strong>Explanation:</strong> The reverse pairs are:
 (1, 4) --&gt; nums[1] = 3, nums[4] = 1, 3 &gt; 2 * 1
 (3, 4) --&gt; nums[3] = 3, nums[4] = 1, 3 &gt; 2 * 1
-<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
+</pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
-<pre style="position: relative;"><strong>Input:</strong> nums = [2,4,3,5,1]
+<pre><strong>Input:</strong> nums = [2,4,3,5,1]
 <strong>Output:</strong> 3
 <strong>Explanation:</strong> The reverse pairs are:
 (1, 4) --&gt; nums[1] = 4, nums[4] = 1, 4 &gt; 2 * 1
 (2, 4) --&gt; nums[2] = 3, nums[4] = 1, 3 &gt; 2 * 1
 (3, 4) --&gt; nums[3] = 5, nums[4] = 1, 5 &gt; 2 * 1
-<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
+</pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
