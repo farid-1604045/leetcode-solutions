@@ -7,17 +7,17 @@
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
 
-<pre style="position: relative;"><strong>Input:</strong> nums = [1,2,5,9], threshold = 6
+<pre><strong>Input:</strong> nums = [1,2,5,9], threshold = 6
 <strong>Output:</strong> 5
 <strong>Explanation:</strong> We can get a sum to 17 (1+2+5+9) if the divisor is 1. 
 If the divisor is 4 we can get a sum of 7 (1+1+2+3) and if the divisor is 5 the sum will be 5 (1+1+1+2). 
-<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
+</pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
-<pre style="position: relative;"><strong>Input:</strong> nums = [44,22,33,11,1], threshold = 5
+<pre><strong>Input:</strong> nums = [44,22,33,11,1], threshold = 5
 <strong>Output:</strong> 44
-<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
+</pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
