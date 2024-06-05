@@ -16,7 +16,7 @@ public:
             }
 
             for (auto& pair : commonCount) {
-                pair.second = std::min(pair.second, currentCount[pair.first]);
+                pair.second = min(pair.second, currentCount[pair.first]);
             }
 
             for (auto it = commonCount.begin(); it != commonCount.end();) {
