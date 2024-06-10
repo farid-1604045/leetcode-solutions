@@ -18,7 +18,7 @@ private:
     double myPowRecursive(double x, int n)
     {
         if (n == 0) return 1;
-        // if (n == 1) return x;
+        if (n == 1) return x;
 
         // Recursion with divide and conquer
         double half = myPowRecursive(x, n / 2);
