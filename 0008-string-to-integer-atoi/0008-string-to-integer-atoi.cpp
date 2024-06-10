@@ -1,30 +1,46 @@
 class Solution {
 public:
     int myAtoi(string s) {
-        int n = s.size();
-        int i = 0;
-
-        while (i < n && s[i] == ' ') {
-            i++;
+        return myAtoiRecursive(s, 0, 1, 0, false);
+    }
+private:
+    int myAtoiRecursive(string& s, int index, int sign, long long result, bool signDetermined)
+    {
+        if(index >= s.size())
+        {
+            return result*sign;
         }
-
-        int sign = 1;
-        if (i < n && (s[i] == '-' || s[i] == '+')) {
-            sign = (s[i] == '-') ? -1 : 1;
-            i++;
+        
+        
+        char currentChar = s[index];
+        
+        if(!signDetermined && currentChar == ' ')
+        {
+            return myAtoiRecursive(s, index+1, sign, result, signDetermined);
         }
-        long long result = 0;
-        while (i < n && isdigit(s[i])) {
-            result = result * 10 + (s[i] - '0');
-            if (sign * result > INT_MAX) {
+        
+        if(!signDetermined && (currentChar == '-' || currentChar == '+'))
+        {
+            sign = (currentChar == '-') ? -1 : 1;
+            return myAtoiRecursive(s, index+1, sign, result, true);
+        }
+        
+        if(isdigit(currentChar))
+        {
+            result = result*10 + (currentChar - '0');
+            if(sign * result > INT_MAX)
+            {
                 return INT_MAX;
             }
-            if (sign * result < INT_MIN) {
+            
+            if(sign * result < INT_MIN)
+            {
                 return INT_MIN;
             }
-            i++;
-        }
 
-        return sign * result;
+            return myAtoiRecursive(s, index+1, sign, result, true);
+        }
+        
+        return sign*result;
     }
 };
