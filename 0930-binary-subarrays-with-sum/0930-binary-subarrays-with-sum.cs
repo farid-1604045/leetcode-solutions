@@ -1,22 +1,21 @@
 public class Solution {
     public int NumSubarraysWithSum(int[] nums, int goal) {
-        Dictionary<int, int> cumulativeSumCount = new Dictionary<int, int>();
-        cumulativeSumCount[0] = 1;  // Initialize with sum 0 occurring once
-        int cumulativeSum = 0;
-        int count = 0;
+        return AtMost(nums, goal) - AtMost(nums, goal - 1);
+    }
+    private int AtMost(int[] nums, int goal) {
+        if (goal < 0) return 0;
+        int left = 0, right = 0, sum = 0, count = 0;
+        
+        while (right < nums.Length) {
+            sum += nums[right];
 
-        foreach (int num in nums) {
-            cumulativeSum += num;
-
-            if (cumulativeSumCount.ContainsKey(cumulativeSum - goal)) {
-                count += cumulativeSumCount[cumulativeSum - goal];
+            while (sum > goal) {
+                sum -= nums[left];
+                left++;
             }
 
-            if (cumulativeSumCount.ContainsKey(cumulativeSum)) {
-                cumulativeSumCount[cumulativeSum]++;
-            } else {
-                cumulativeSumCount[cumulativeSum] = 1;
-            }
+            count += right - left + 1;
+            right++;
         }
 
         return count;
