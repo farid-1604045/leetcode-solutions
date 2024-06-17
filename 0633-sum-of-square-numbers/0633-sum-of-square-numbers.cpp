@@ -1,20 +1,25 @@
 class Solution {
 public:
-    bool is_square(int n){
-        double sqrt_n=sqrt(n);
-        return sqrt_n==int(sqrt_n);
-    }
-    bool judgeSquareSum(int n) {
-        if (n==0) return 1;
-        while (n%4==0) n/=4;
-        if (n%8==7) return 0;
-        int sqrt_n=int(sqrt(n));
-        if (is_square(n)) return 1;
-        for(int i=1; i<=sqrt_n; i++)
+    bool judgeSquareSum(int c) {
+        int iteration = sqrt(c);
+        int start = 0, end = iteration;
+        while(start<=end)
         {
-            int y=n-i*i;
-            if (is_square(y)) return 1;
+            long long a = (long long)start * start;
+            long long b = (long long)end * end;
+            if(a+b == c)
+            {
+                return true;
+            }
+            if(a+b < c)
+            {
+                start++;
+            }
+            if(a+b > c)
+            {
+                end--;
+            }
         }
-        return 0;
+        return false;
     }
 };
