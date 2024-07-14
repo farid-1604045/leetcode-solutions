@@ -1,44 +1,83 @@
+#include<bits/stdc++.h>
 class Solution {
 public:
     string countOfAtoms(string formula) {
-        int i = 0;
-        string ans;
-        for (const auto& kv : countOfAtoms(formula, i)) {
-            ans += kv.first;
-            if (kv.second > 1) ans += std::to_string(kv.second);
-        }
-        return ans;
-    }
-private:    
-    map<string, int> countOfAtoms(const string& formula, int& i) {
-        map<string, int> counts;
-        while (i != formula.length()) {
-            if (formula[i] == '(') {                
-                const auto& tmp_counts = countOfAtoms(formula, ++i);
-                const int count = getCount(formula, i);
-                for (const auto& kv : tmp_counts)
-                    counts[kv.first] += kv.second * count;
-            } else if (formula[i] == ')') {
-                ++i;
-                return counts;
-            } else {
-                const string& name = getName(formula, i);
-                counts[name] += getCount(formula, i);
+        stack<unordered_map<string, int>>st;
+        st.push(unordered_map<string, int>());
+        
+        int index = 0;
+        
+        while(index < formula.length())
+        {
+            if(formula[index] == '(')
+            {
+                st.push(unordered_map<string, int>());
+                index++;
+            }
+            
+            else if(formula[index] == ')')
+            {
+                unordered_map<string, int> currMap = st.top();
+                st.pop();
+                index++;
+                string multiplier;
+                while(index < formula.length() && isdigit(formula[index]))
+                {
+                    multiplier += formula[index];
+                    index++;
+                }
+                
+                if(!multiplier.empty())
+                {
+                    int mult = stoi(multiplier);
+                    for(auto& [atom, count] : currMap)
+                    {
+                        currMap[atom] = count*mult;
+                    }
+                }
+                
+                for(auto & [atom, count]: currMap)
+                {
+                    st.top()[atom] += count;
+                }
+            }
+            
+            else
+            {
+                string currAtom;
+                currAtom += formula[index];
+                index++;
+                
+                while(index < formula.length() && islower(formula[index]))
+                {
+                    currAtom += formula[index];
+                    index++;
+                }
+                
+                string currCount;
+                while(index < formula.length() && isdigit(formula[index]))
+                {
+                    currCount += formula[index];
+                    index++;
+                }
+                
+                int count = currCount.empty() ? 1 : stoi(currCount);
+                st.top()[currAtom] += count;
             }
         }
-        return counts;
-    }
-    
-    string getName(const string& formula, int& i) {
-        string name;
-        while (isalpha(formula[i]) 
-           && (name.empty() || islower(formula[i]))) name += formula[i++];
-        return name;
-    }
-    
-    int getCount(const string& formula, int& i) {
-        string count_str;
-        while (isdigit(formula[i])) count_str += formula[i++];
-        return count_str.empty() ? 1 : std::stoi(count_str);
-    }    
+        
+        map<string, int> finalMap(st.top().begin(), st.top().end());
+        
+        string ans;
+        for(auto& [atom, count] : finalMap)
+        {
+            ans += atom;
+            if(count > 1)
+            {
+                ans += to_string(count);
+            }
+        }
+        
+        return ans;
+    } 
 };
