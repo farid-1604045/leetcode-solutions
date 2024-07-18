@@ -1,55 +1,48 @@
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left;
- *     public TreeNode right;
- *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
-public class Solution {
-    public int CountPairs(TreeNode root, int distance) {
-        int count = 0;
-
-        List<int> Dfs(TreeNode node) {
-            if (node == null) return new List<int>();
-
-            // If it's a leaf node, return a list with a single element, 1 (distance from the leaf itself)
-            if (node.left == null && node.right == null) return new List<int> { 1 };
-
-            List<int> leftDistances = Dfs(node.left);
-            List<int> rightDistances = Dfs(node.right);
-
-            // Count pairs from left and right subtrees
-            foreach (int ld in leftDistances) {
-                foreach (int rd in rightDistances) {
-                    if (ld + rd <= distance) {
-                        count++;
+class Solution {
+public:
+    int countPairs(TreeNode* root, int distance) {
+        unordered_map<TreeNode*, vector<TreeNode*>> map;
+        vector<TreeNode*> leaves;
+        findLeaves(root, {}, leaves, map);
+        int res = 0;
+        for (int i = 0; i < leaves.size(); i++) {
+            for (int j = i + 1; j < leaves.size(); j++) {
+                vector<TreeNode*>& list_i = map[leaves[i]];
+                vector<TreeNode*>& list_j = map[leaves[j]];
+                for (int k = 0; k < min(list_i.size(), list_j.size()); k++) {
+                    if (list_i[k] != list_j[k]) {
+                        int dist = list_i.size() - k + list_j.size() - k;
+                        if (dist <= distance) res++;
+                        break;
                     }
                 }
             }
-
-            // Prepare distances to propagate up the tree
-            List<int> currentDistances = new List<int>();
-            foreach (int ld in leftDistances) {
-                if (ld + 1 <= distance) {
-                    currentDistances.Add(ld + 1);
-                }
-            }
-            foreach (int rd in rightDistances) {
-                if (rd + 1 <= distance) {
-                    currentDistances.Add(rd + 1);
-                }
-            }
-
-            return currentDistances;
         }
-
-        Dfs(root);
-        return count;
+        return res;
     }
-}
+
+private:
+    void findLeaves(TreeNode* node, vector<TreeNode*> trail, vector<TreeNode*>& leaves, unordered_map<TreeNode*, vector<TreeNode*>>& map) {
+        if (!node) return;
+        vector<TreeNode*> tmp(trail);
+        tmp.push_back(node);
+        if (!node->left && !node->right) {
+            map[node] = tmp;
+            leaves.push_back(node);
+            return;
+        }
+        findLeaves(node->left, tmp, leaves, map);
+        findLeaves(node->right, tmp, leaves, map);
+    }
+};
