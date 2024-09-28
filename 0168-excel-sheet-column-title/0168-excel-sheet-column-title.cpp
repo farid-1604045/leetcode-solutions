@@ -13,10 +13,9 @@ public:
             
             else
             {
-                int x = columnNumber % 26;
+                int x = columnNumber / 26;
                 ans.push_back('Z');
-                int y = columnNumber / 26;
-                columnNumber = y - 1;
+                columnNumber = x - 1;
             }
         }
         
